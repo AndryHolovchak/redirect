@@ -1,0 +1,50 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirect</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #17171f;
+        font-family: "Helvetica";
+      }
+      .button {
+        width: 200px;
+        padding: 20;
+        border-radius: 5px;
+        overflow: hidden;
+        text-align: center;
+        background-color: #a15269;
+        color: #f7f7f7;
+        user-select: none;
+        cursor: pointer;
+        box-shadow: 0 0 15px -4px #000;
+      }
+      .button:active {
+        filter: brightness(0.8);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="button">Sign in</div>
+  </body>
+  <script>
+    let paramsStr = window.location.hash.substr(1).split("&");
+    let params = {};
+
+    for (let paramStr of paramsStr) {
+      let splitted = paramStr.split("=");
+      params[splitted[0]] = splitted[1];
+    }
+
+    let token = params["token|access_token"];
+    let error = params["error_reason"];
+
+    document.getElementsByClassName("button")[0].onclick = () => {
+      window.open(`zanysound://?isAuthRedir=true&d_t=${token}&error=${error}`);
+    };
+  </script>
+</html>
